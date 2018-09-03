@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,GIDSignInDelegate {
         
         
     }
-    
+    //app delegate
 
     var window: UIWindow?
 
