@@ -10,6 +10,7 @@
 		0E17F64526158640358E919C /* Pods_Swipe_Media.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79FEA2FB76D668B5CE69A532 /* Pods_Swipe_Media.framework */; };
 		B705A40E21398ACD00AA2BA9 /* addbtn-min.png in Resources */ = {isa = PBXBuildFile; fileRef = B705A40D21398ACA00AA2BA9 /* addbtn-min.png */; };
 		B705A4102139907900AA2BA9 /* Upload Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B705A40F2139907700AA2BA9 /* Upload Icon.png */; };
+		B7081FE221468B4D008C2B15 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7081FE121468B4C008C2B15 /* SearchCell.swift */; };
 		B71F2B7B212D7E7D0094F688 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71F2B7A212D7E7D0094F688 /* AVFoundation.framework */; };
 		B71F2B7D212D7E860094F688 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71F2B7C212D7E860094F688 /* AVKit.framework */; };
 		B71F2B80212DA53A0094F688 /* unchk.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F2B7E212DA5370094F688 /* unchk.png */; };
@@ -62,6 +63,7 @@
 		AD60E64F28F3D5EF215BC828 /* Pods-Swipe Media.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swipe Media.release.xcconfig"; path = "Pods/Target Support Files/Pods-Swipe Media/Pods-Swipe Media.release.xcconfig"; sourceTree = "<group>"; };
 		B705A40D21398ACA00AA2BA9 /* addbtn-min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addbtn-min.png"; sourceTree = "<group>"; };
 		B705A40F2139907700AA2BA9 /* Upload Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Upload Icon.png"; sourceTree = "<group>"; };
+		B7081FE121468B4C008C2B15 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		B71F2B7A212D7E7D0094F688 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B71F2B7C212D7E860094F688 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		B71F2B7E212DA5370094F688 /* unchk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchk.png; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				B7CFD438212AF81E0080ACB1 /* ProfileCollCell.swift */,
 				B7CFD42C212AA0450080ACB1 /* AddPostController.swift */,
 				B7CFD42E212AA0590080ACB1 /* SearchController.swift */,
+				B7081FE121468B4C008C2B15 /* SearchCell.swift */,
 				B7CFD430212AA69B0080ACB1 /* SliderController.swift */,
 				B7CFD432212AA6B30080ACB1 /* SliderCell.swift */,
 				B7323433211DBEAD00C2BDFB /* HomeCollCell.swift */,
@@ -437,6 +440,7 @@
 				B7CFD437212AF56F0080ACB1 /* ProfileController.swift in Sources */,
 				B740996721199E2D00D8BF05 /* ViewController.swift in Sources */,
 				B7934E8C213ED02400673213 /* EditProfileController.swift in Sources */,
+				B7081FE221468B4D008C2B15 /* SearchCell.swift in Sources */,
 				B7CFD43B212B0BA90080ACB1 /* TabButtonController.swift in Sources */,
 				B740997721199F5700D8BF05 /* LoginController.swift in Sources */,
 				B7BE5785212ED5DF00FEE3DB /* PostArrayData.swift in Sources */,

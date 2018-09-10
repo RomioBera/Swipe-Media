@@ -16,6 +16,7 @@ class SingleToneClass {
 
     var selectedBtn = " "
     var loginType = " "
+    var selectedUser = " "
    
     
 }

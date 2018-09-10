@@ -22,7 +22,9 @@ class HomeCollCell: UICollectionViewCell {
     @IBOutlet var commentBtn: UIButton!
     @IBOutlet var commentlbl: UILabel!
     @IBOutlet var playBtn: UIButton!
-  
+    @IBOutlet var reportBtn: UIButton!
+    
+    
     @IBOutlet var cellLbl: UILabel!
     @IBOutlet var descriptionLbl: UILabel!
     @IBOutlet var commentView: UITextView!

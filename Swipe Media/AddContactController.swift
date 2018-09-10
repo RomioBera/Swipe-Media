@@ -135,7 +135,7 @@ extension AddContactController : UITableViewDataSource,UITableViewDelegate
         
         cell.profilePic.layer.cornerRadius = cell.profilePic.frame.size.width / 2
         cell.profilePic.clipsToBounds = true
-        cell.profilePic.sd_setImage(with: URL(string: self.userAllData[indexPath.row].userProfileImg!), placeholderImage: UIImage(named: " "))
+        cell.profilePic.sd_setImage(with: URL(string: self.userAllData[indexPath.row].userProfileImg!), placeholderImage: UIImage(named: "Profile Icon"))
         cell.userName.text = self.userAllData[indexPath.row].userName
         
     

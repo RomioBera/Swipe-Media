@@ -65,7 +65,7 @@ class ProfileController: UIViewController {
         let feed = [
             
             "postID" : self.postAllUserData[selectedIndex].postId,
-            "reportby_userId"      : Auth.auth().currentUser?.uid,
+            "reportby_userId"       :  Auth.auth().currentUser?.uid,
             "reportby_userName"     : self.userNameLbl.text!,
             "postby_userId"         : self.postAllUserData[selectedIndex].userId,
             "postby_userName"       : self.postAllUserData[selectedIndex].userName,
@@ -98,7 +98,7 @@ class ProfileController: UIViewController {
         self.view?.addSubview(postView)
         self.view.isHidden = false;
         
-        self.reportView.layer.cornerRadius = 5.0
+        self.reportView.layer.cornerRadius = 10.0
         self.reportView.clipsToBounds = true
     }
     // cross btn action: - Mark
@@ -163,27 +163,55 @@ class ProfileController: UIViewController {
     func fetchUserProfileData ()
     {
         
-        let uid = Auth.auth().currentUser?.uid
-        let ref = Database.database().reference()
-        //.queryOrderedByKey()
-        ref.child("Users").child(uid!).observeSingleEvent(of: .value, with: {
-            
-            (snapshot) in
-            
-           // print(snapshot)
-            
-         
-            let users = snapshot.value as! [String : AnyObject]
-           self.profileImgUrl = (users["profilePic"] as! String)
-            self.followersLbl.text = String(users["followersCount"] as! Int)
-             self.followingLbl.text = String(users["followingCount"] as! Int)
-            
-            self.profileImg.sd_setImage(with: URL(string: (users["profilePic"] as! String)),placeholderImage: UIImage(named: "User"))
-            
-            self.userNameLbl.text = (users["userName"] as! String)
-            
-
-    })
+        if SingleToneClass.shared.selectedUser == " "
+        {
+            let uid = Auth.auth().currentUser?.uid
+            let ref = Database.database().reference()
+            //.queryOrderedByKey()
+            ref.child("Users").child(uid!).observeSingleEvent(of: .value, with: {
+                
+                (snapshot) in
+                
+                // print(snapshot)
+                
+                
+                let users = snapshot.value as! [String : AnyObject]
+                self.profileImgUrl = (users["profilePic"] as! String)
+                self.followersLbl.text = String(users["followersCount"] as! Int)
+                self.followingLbl.text = String(users["followingCount"] as! Int)
+                
+                self.profileImg.sd_setImage(with: URL(string: (users["profilePic"] as! String)),placeholderImage: UIImage(named: "User"))
+                
+                self.userNameLbl.text = (users["userName"] as! String)
+                
+                
+            })
+        }
+        
+       else
+        {
+           
+            let ref = Database.database().reference()
+            //.queryOrderedByKey()
+            ref.child("Users").child(SingleToneClass.shared.selectedUser).observeSingleEvent(of: .value, with: {
+                
+                (snapshot) in
+                
+                // print(snapshot)
+                
+                
+                let users = snapshot.value as! [String : AnyObject]
+                self.profileImgUrl = (users["profilePic"] as! String)
+                self.followersLbl.text = String(users["followersCount"] as! Int)
+                self.followingLbl.text = String(users["followingCount"] as! Int)
+                
+                self.profileImg.sd_setImage(with: URL(string: (users["profilePic"] as! String)),placeholderImage: UIImage(named: "User"))
+                
+                self.userNameLbl.text = (users["userName"] as! String)
+                
+                
+            })
+        }
         
 }
     
@@ -221,34 +249,71 @@ class ProfileController: UIViewController {
             {
                 if let uid = value["userId"] as? String
                 {
-                    if uid == Auth.auth().currentUser?.uid
-                    {
-                        
-                  
-                        let userToShow = PostData()
-                        userToShow.postId = value["postID"] as? String
-                        userToShow.userId = value["userId"] as? String
-                        userToShow.postDes = value["post_description"] as? String
-                        userToShow.imgUrl = value["pathToImage"] as? String
-                        userToShow.userName = value ["userName"] as? String
-                        userToShow.videoUrl = value ["pathToVideo"] as? String
-                        userToShow.thumbleImage = value["thumbleImage"] as? String
-                        userToShow.imageHeight = value ["imageHeight"] as? Int
-                        userToShow.imageWidth = value["imageWidth"] as? Int
-                        userToShow.likes = value ["likes"] as? Int
-                         userToShow.comments = value ["comments"] as? Int
-                        
-                        
-                        if let people = value["peoplewhoLike"] as? [String: AnyObject]
+                    
+                     if SingleToneClass.shared.selectedUser == " "
+                     {
+                        if uid == Auth.auth().currentUser?.uid
                         {
-                            for (_,person) in people
+                            
+                            
+                            let userToShow = PostData()
+                            userToShow.postId = value["postID"] as? String
+                            userToShow.userId = value["userId"] as? String
+                            userToShow.postDes = value["post_description"] as? String
+                            userToShow.imgUrl = value["pathToImage"] as? String
+                            userToShow.userName = value ["userName"] as? String
+                            userToShow.videoUrl = value ["pathToVideo"] as? String
+                            userToShow.thumbleImage = value["thumbleImage"] as? String
+                            userToShow.imageHeight = value ["imageHeight"] as? Int
+                            userToShow.imageWidth = value["imageWidth"] as? Int
+                            userToShow.likes = value ["likes"] as? Int
+                            userToShow.comments = value ["comments"] as? Int
+                            
+                            
+                            if let people = value["peoplewhoLike"] as? [String: AnyObject]
                             {
-                                userToShow.peopleWholike.append(person as! String)
+                                for (_,person) in people
+                                {
+                                    userToShow.peopleWholike.append(person as! String)
+                                }
                             }
+                            
+                            self.postData.append(userToShow)
                         }
-                        
-                        self.postData.append(userToShow)
                     }
+                    else
+                    
+                     {
+                        if uid == SingleToneClass.shared.selectedUser
+                        {
+                            
+                            
+                            let userToShow = PostData()
+                            userToShow.postId = value["postID"] as? String
+                            userToShow.userId = value["userId"] as? String
+                            userToShow.postDes = value["post_description"] as? String
+                            userToShow.imgUrl = value["pathToImage"] as? String
+                            userToShow.userName = value ["userName"] as? String
+                            userToShow.videoUrl = value ["pathToVideo"] as? String
+                            userToShow.thumbleImage = value["thumbleImage"] as? String
+                            userToShow.imageHeight = value ["imageHeight"] as? Int
+                            userToShow.imageWidth = value["imageWidth"] as? Int
+                            userToShow.likes = value ["likes"] as? Int
+                            userToShow.comments = value ["comments"] as? Int
+                            
+                            
+                            if let people = value["peoplewhoLike"] as? [String: AnyObject]
+                            {
+                                for (_,person) in people
+                                {
+                                    userToShow.peopleWholike.append(person as! String)
+                                }
+                            }
+                            
+                            self.postData.append(userToShow)
+                        }
+                    }
+                    
                 }
              
             }
@@ -266,7 +331,7 @@ class ProfileController: UIViewController {
     func fetchAllUserPost()
     {
         let ref = Database.database().reference()
-        ref.child("newposts").queryLimited(toFirst: 10).queryOrderedByKey().observeSingleEvent(of: .value, with: {
+        ref.child("newposts").queryLimited(toFirst: 20).queryOrderedByKey().observeSingleEvent(of: .value, with: {
                 
                 (snapshot) in
                
@@ -635,6 +700,8 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
             {
                 cell.uploadImg.sd_setImage(with: URL(string: self.self.postData[indexPath.row].thumbleImage!), placeholderImage: UIImage(named: " "))
                 cell.videoIcon.isHidden = false
+                
+                
                 cell.profileVideoPlayBtn.isHidden = false
                 
             }
@@ -670,6 +737,10 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
             cell.likeLbl.text = String( postAllUserData[indexPath.row].likes)
             cell.commentlbl.text = String( postAllUserData[indexPath.row].comments)
             
+            cell.reportBtn.tag = indexPath.row
+            cell.reportBtn.addTarget(self, action: #selector(reportAction), for: .touchUpInside)
+            
+            
             if postAllUserData[indexPath.row].userId == userData[indexPath.row].userId
             {
                 cell.userImage.sd_setImage(with: URL(string: userData[indexPath.row].userProfileImg as! String),placeholderImage: UIImage(named: " "))
@@ -677,8 +748,10 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
             
             if self.postAllUserData[indexPath.row].imgUrl == " "
             {
-                cell.playBtn.isHidden = false
+                //cell.playBtn.isHidden = false
                 cell.postImg.sd_setImage(with: URL(string: self.postAllUserData[indexPath.row].thumbleImage!), placeholderImage: UIImage(named: " "))
+                self.videoURL = self.postAllUserData[indexPath.row].videoUrl
+                playExternalVideo()
             }
             else
             {
@@ -691,13 +764,13 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
                 if(( (postAllUserData[indexPath.row].imageWidth) > 300) && (postAllUserData[indexPath.row].imageHeight) > 400)
                 {
                     cell.postImg.contentMode = .scaleToFill
-                    cell.backgroundColor = UIColor.white
+                    cell.contentView.backgroundColor = UIColor.white
                 }
                 else
                     
                 {
                     cell.postImg.contentMode = .scaleAspectFit
-                    cell.backgroundColor = UIColor.black
+                    cell.contentView.backgroundColor = UIColor.black
                 }
                 
                 
@@ -705,9 +778,9 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
             }
             
             cell.userName.text = userData[indexPath.row].userName!
-             cell.userName.layer.masksToBounds = true
-             cell.userName.layer.shadowColor = UIColor.red.cgColor
-             cell.userName.layer.shadowOpacity = 0.5
+            // cell.userName.layer.masksToBounds = true
+            // cell.userName.layer.shadowColor = UIColor.red.cgColor
+             //cell.userName.layer.shadowOpacity = 0.5
             
             if (self.postAllUserData[indexPath.row].peopleWholike.count == 0)
             {
@@ -1020,7 +1093,13 @@ extension ProfileController : tabbarIndexDelegate
             
         {
             SingleToneClass.shared.selectedBtn   = " Search"
-            setSearchNav()
+            
+            let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "SearchController") as! SearchController
+           
+            self.navigationController?.pushViewController(homeVC, animated: false)
+            
+            
+           // setSearchNav()
             
         }
         else if (index == 0)
@@ -1180,7 +1259,7 @@ extension ProfileController : UITableViewDataSource,UITableViewDelegate
     
     @objc func reportAction(sender: UIButton){
         
-        print("romio")
+      
         
         self.reportView.isHidden = false
         

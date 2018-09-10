@@ -70,6 +70,8 @@ class CommentController: UIViewController {
         let ref = Database.database().reference()
        
         self.allCommentData.removeAll()
+        self.userData.removeAll()
+        
         ref.child("newposts").child(self.postId).child("peoplewhoComment").queryLimited(toFirst: 10).queryOrderedByKey().observeSingleEvent(of: .value, with: {
             
             (snapshot) in
@@ -211,7 +213,7 @@ class CommentController: UIViewController {
             )}
             
 //            self.commentTblView.reloadData()
-            
+            self.postTxt.text = " "
             self.fetchCommentData()
         })
         

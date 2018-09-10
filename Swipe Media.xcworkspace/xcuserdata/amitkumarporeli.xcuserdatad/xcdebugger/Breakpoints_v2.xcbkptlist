@@ -26,7 +26,7 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/LoginController.swift"
-                  timestampString = "557932662.31615"
+                  timestampString = "558275797.579519"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "203"
@@ -41,7 +41,7 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/LoginController.swift"
-                  timestampString = "557932662.3203861"
+                  timestampString = "558275797.582075"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "204"
@@ -106,7 +106,7 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/HomeController.swift"
-                  timestampString = "557932662.3617409"
+                  timestampString = "558275797.6010031"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "297"
@@ -121,7 +121,7 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/HomeController.swift"
-                  timestampString = "557932662.364879"
+                  timestampString = "558275797.6035841"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "298"
@@ -169,22 +169,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Swipe Media/TabButtonController.swift"
-            timestampString = "557244556.946355"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "searchBtnAction(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Swipe Media/ParentTabController.swift"
             timestampString = "557769248.341059"
             startingColumnNumber = "9223372036854775807"
@@ -202,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/AddPostController.swift"
-            timestampString = "557939274.523436"
+            timestampString = "558266391.831093"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -218,7 +202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/AddPostController.swift"
-            timestampString = "557939274.523508"
+            timestampString = "558266391.831517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
@@ -266,7 +250,7 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/HomeTableCell.swift"
-                  timestampString = "557932662.481626"
+                  timestampString = "558275797.68616"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "124"
@@ -281,7 +265,7 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/HomeTableCell.swift"
-                  timestampString = "557932662.485687"
+                  timestampString = "558275797.690178"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -314,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/ProfileController.swift"
-            timestampString = "558261535.6257761"
+            timestampString = "558276826.73086"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "873"
-            endingLineNumber = "873"
+            startingLineNumber = "946"
+            endingLineNumber = "946"
             landmarkName = "myImageUploadRequest()"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/CommentController.swift"
-            timestampString = "557939274.524399"
+            timestampString = "558276826.731401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "postBtnAction(_:)"
             landmarkType = "7">
             <Locations>
@@ -346,11 +330,11 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/CommentController.swift"
-                  timestampString = "557932662.547212"
+                  timestampString = "558275797.710116"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "181"
-                  endingLineNumber = "181"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190"
                   offsetFromSymbolStart = "174">
                </Location>
                <Location
@@ -361,11 +345,11 @@
                   moduleName = "Swipe Media"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/amitkumarporeli/Documents/Romio%20Practice/Clint%20Project/Swipe%20Media/Swipe%20Media/Swipe%20Media/CommentController.swift"
-                  timestampString = "557932662.551796"
+                  timestampString = "558275797.713071"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "186"
-                  endingLineNumber = "186"
+                  startingLineNumber = "195"
+                  endingLineNumber = "195"
                   offsetFromSymbolStart = "25">
                </Location>
             </Locations>
@@ -378,7 +362,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/CommentController.swift"
-            timestampString = "557939274.524497"
+            timestampString = "558276826.731461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
@@ -409,120 +393,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.693171"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.693243"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.6933089"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.693374"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.693441"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.6936131"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.6937439"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "fetchNewDatabase()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Swipe Media/CommentController.swift"
-            timestampString = "557939274.524829"
+            timestampString = "558276826.731547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
@@ -538,23 +410,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.695845"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
-            landmarkName = "unfollowButtonAction(sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.695948"
+            timestampString = "558276826.731604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "296"
@@ -569,28 +425,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Swipe Media/AddContactController.swift"
-            timestampString = "557851989.696053"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
-            landmarkName = "followButtonAction(sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Swipe Media/ProfileController.swift"
-            timestampString = "558261535.627093"
+            timestampString = "558276826.731661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "456"
-            endingLineNumber = "456"
+            startingLineNumber = "521"
+            endingLineNumber = "521"
             landmarkName = "menuOpen()"
             landmarkType = "7">
          </BreakpointContent>
@@ -602,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/ProfileController.swift"
-            timestampString = "558261535.6279269"
+            timestampString = "558276826.73208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "473"
-            endingLineNumber = "473"
+            startingLineNumber = "538"
+            endingLineNumber = "538"
             landmarkName = "menuOpen()"
             landmarkType = "7">
          </BreakpointContent>
@@ -618,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/ProfileController.swift"
-            timestampString = "558261535.628715"
+            timestampString = "558276826.732474"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1119"
-            endingLineNumber = "1119"
+            startingLineNumber = "1198"
+            endingLineNumber = "1198"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -634,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Swipe Media/ProfileController.swift"
-            timestampString = "558261535.629548"
+            timestampString = "558276826.733059"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "fetchUserProfilePosts()"
             landmarkType = "7">
          </BreakpointContent>
@@ -688,6 +528,102 @@
             startingLineNumber = "431"
             endingLineNumber = "431"
             landmarkName = "loginBtnAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Swipe Media/ProfileController.swift"
+            timestampString = "558276826.7336251"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "763"
+            endingLineNumber = "763"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Swipe Media/ProfileController.swift"
+            timestampString = "558276826.7339441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1095"
+            endingLineNumber = "1095"
+            landmarkName = "getTabbarIndex(index:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Swipe Media/ProfileController.swift"
+            timestampString = "558276826.734243"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1108"
+            endingLineNumber = "1108"
+            landmarkName = "getTabbarIndex(index:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Swipe Media/TabButtonController.swift"
+            timestampString = "558276826.7345181"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "homeBtnAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Swipe Media/TabButtonController.swift"
+            timestampString = "558276826.7345769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "homeBtnAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Swipe Media/ProfileController.swift"
+            timestampString = "558276826.734637"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1079"
+            endingLineNumber = "1079"
+            landmarkName = "getTabbarIndex(index:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
