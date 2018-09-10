@@ -12,7 +12,8 @@ class FollowUser: NSObject {
 
     var key : String!
     var followUser: String!
-    
+    var followingUser : [String] = [String]()
+    var followersUser : [String] = [String]()
     
     
     

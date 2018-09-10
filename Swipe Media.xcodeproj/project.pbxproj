@@ -31,12 +31,14 @@
 		B740F4DD213D267400ACC9D0 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B740F4DC213D267400ACC9D0 /* UserData.swift */; };
 		B783AAE92122B9180010ADED /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B783AAE82122B9180010ADED /* PostData.swift */; };
 		B783AAEB2122BA4C0010ADED /* UserProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B783AAEA2122BA4C0010ADED /* UserProfileData.swift */; };
+		B7934E8C213ED02400673213 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7934E8B213ED02400673213 /* EditProfileController.swift */; };
 		B796D6A2211A0DDC0009C21C /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B796D6A1211A0DDC0009C21C /* RegistrationController.swift */; };
 		B796D6A4211A0E060009C21C /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B796D6A3211A0E060009C21C /* HomeController.swift */; };
 		B799C55E2137CC510051B888 /* CommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B799C55D2137CC510051B888 /* CommentController.swift */; };
 		B799C5602137CC720051B888 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B799C55F2137CC720051B888 /* CommentCell.swift */; };
 		B79ABD562126EEC200C87D52 /* CommentsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79ABD552126EEC200C87D52 /* CommentsData.swift */; };
 		B79ABD582127166500C87D52 /* HomeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79ABD572127166500C87D52 /* HomeTableCell.swift */; };
+		B7A5F2A2213FDE7600442E11 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = B7A5F2A1213FDE7500442E11 /* delete.png */; };
 		B7BE5785212ED5DF00FEE3DB /* PostArrayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE5784212ED5DF00FEE3DB /* PostArrayData.swift */; };
 		B7BE7040213526D500E82564 /* FollowUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE703F213526D400E82564 /* FollowUser.swift */; };
 		B7C5424B212FD5B200FA85EF /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5424A212FD5B200FA85EF /* PhotoController.swift */; };
@@ -83,12 +85,14 @@
 		B740F4DC213D267400ACC9D0 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		B783AAE82122B9180010ADED /* PostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
 		B783AAEA2122BA4C0010ADED /* UserProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileData.swift; sourceTree = "<group>"; };
+		B7934E8B213ED02400673213 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		B796D6A1211A0DDC0009C21C /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		B796D6A3211A0E060009C21C /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		B799C55D2137CC510051B888 /* CommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentController.swift; sourceTree = "<group>"; };
 		B799C55F2137CC720051B888 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		B79ABD552126EEC200C87D52 /* CommentsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsData.swift; sourceTree = "<group>"; };
 		B79ABD572127166500C87D52 /* HomeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableCell.swift; sourceTree = "<group>"; };
+		B7A5F2A1213FDE7500442E11 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		B7BE5784212ED5DF00FEE3DB /* PostArrayData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostArrayData.swift; sourceTree = "<group>"; };
 		B7BE703F213526D400E82564 /* FollowUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowUser.swift; sourceTree = "<group>"; };
 		B7C5424A212FD5B200FA85EF /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
@@ -141,6 +145,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B708657F213EB9CF007BE6AE /* Not Needed */ = {
+			isa = PBXGroup;
+			children = (
+				B796D6A3211A0E060009C21C /* HomeController.swift */,
+				B7CFD42A212A9EFC0080ACB1 /* ParentTabController.swift */,
+			);
+			name = "Not Needed";
+			sourceTree = "<group>";
+		};
 		B740995821199E2D00D8BF05 = {
 			isa = PBXGroup;
 			children = (
@@ -166,23 +179,22 @@
 				B740996621199E2D00D8BF05 /* ViewController.swift */,
 				B796D6A1211A0DDC0009C21C /* RegistrationController.swift */,
 				B740997621199F5700D8BF05 /* LoginController.swift */,
-				B7323433211DBEAD00C2BDFB /* HomeCollCell.swift */,
-				B796D6A3211A0E060009C21C /* HomeController.swift */,
 				B79ABD572127166500C87D52 /* HomeTableCell.swift */,
 				B7C5424A212FD5B200FA85EF /* PhotoController.swift */,
 				B799C55D2137CC510051B888 /* CommentController.swift */,
 				B799C55F2137CC720051B888 /* CommentCell.swift */,
-				B7CFD42A212A9EFC0080ACB1 /* ParentTabController.swift */,
 				B734E3EA21340DBA00E7A553 /* AddContactCell.swift */,
 				B7CFD43A212B0BA90080ACB1 /* TabButtonController.swift */,
 				B734E3E821340CB300E7A553 /* AddContactController.swift */,
 				B7CFD436212AF56F0080ACB1 /* ProfileController.swift */,
+				B7934E8B213ED02400673213 /* EditProfileController.swift */,
 				B7CFD438212AF81E0080ACB1 /* ProfileCollCell.swift */,
 				B7CFD42C212AA0450080ACB1 /* AddPostController.swift */,
 				B7CFD42E212AA0590080ACB1 /* SearchController.swift */,
-				B783AAEA2122BA4C0010ADED /* UserProfileData.swift */,
 				B7CFD430212AA69B0080ACB1 /* SliderController.swift */,
 				B7CFD432212AA6B30080ACB1 /* SliderCell.swift */,
+				B7323433211DBEAD00C2BDFB /* HomeCollCell.swift */,
+				B708657F213EB9CF007BE6AE /* Not Needed */,
 				B740F4DE213D26A400ACC9D0 /* Model */,
 				B74FC11A213D285300E6A8A9 /* Image */,
 				B796D6A5211A0E8F0009C21C /* Font */,
@@ -200,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				B7BE703F213526D400E82564 /* FollowUser.swift */,
+				B783AAEA2122BA4C0010ADED /* UserProfileData.swift */,
 				B79ABD552126EEC200C87D52 /* CommentsData.swift */,
 				B7BE5784212ED5DF00FEE3DB /* PostArrayData.swift */,
 				B740F4DC213D267400ACC9D0 /* UserData.swift */,
@@ -212,6 +225,7 @@
 		B74FC11A213D285300E6A8A9 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				B7A5F2A1213FDE7500442E11 /* delete.png */,
 				B7C5424C212FD68600FA85EF /* t.jpeg */,
 				B705A40F2139907700AA2BA9 /* Upload Icon.png */,
 				B71F2B7F212DA5380094F688 /* chkbox.png */,
@@ -306,6 +320,7 @@
 				B7C5424D212FD68700FA85EF /* t.jpeg in Resources */,
 				B705A40E21398ACD00AA2BA9 /* addbtn-min.png in Resources */,
 				B73D0A852136D0B300249535 /*  Proxima Nova Condensed Semibold.otf in Resources */,
+				B7A5F2A2213FDE7600442E11 /* delete.png in Resources */,
 				B740996F21199E3C00D8BF05 /* LaunchScreen.storyboard in Resources */,
 				B73D0A872136D0B300249535 /*  Proxima Nova Condensed Regular.otf in Resources */,
 				B7FFDEDD212C49EA00EE7B69 /* play-button-min.png in Resources */,
@@ -421,6 +436,7 @@
 				B799C55E2137CC510051B888 /* CommentController.swift in Sources */,
 				B7CFD437212AF56F0080ACB1 /* ProfileController.swift in Sources */,
 				B740996721199E2D00D8BF05 /* ViewController.swift in Sources */,
+				B7934E8C213ED02400673213 /* EditProfileController.swift in Sources */,
 				B7CFD43B212B0BA90080ACB1 /* TabButtonController.swift in Sources */,
 				B740997721199F5700D8BF05 /* LoginController.swift in Sources */,
 				B7BE5785212ED5DF00FEE3DB /* PostArrayData.swift in Sources */,

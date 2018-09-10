@@ -27,8 +27,9 @@ class ProfileController: UIViewController {
     @IBOutlet var profileCollView: UICollectionView!
     @IBOutlet var profileImg: UIImageView!
     @IBOutlet var homeScreenTblview: UITableView!
-    @IBOutlet var postTblView: UIView!
+    @IBOutlet var postView: UIView!
     
+    @IBOutlet var homeCollView: UICollectionView!
     var videoURL = " "
     var profileImgUrl = " "
     var profilePicArray = NSMutableArray()
@@ -36,6 +37,7 @@ class ProfileController: UIViewController {
     var postAllUserData = [PostData]()
     var userProfileData = [UserProfileData]()
     var userData = [UserData]()
+    var searchData = [UserProfileData]()
     var loginType = ""
     var imageName = String()
     var imagePicker = UIImagePickerController()
@@ -44,44 +46,67 @@ class ProfileController: UIViewController {
     var sliderVC: SliderController! = nil
     var tabButtonVC : TabButtonController! = nil
     var ispostLiked = false
+    var searchingName = " "
+    var textField = UITextField()
+    var selectedIndex = NSInteger()
     
+    @IBOutlet var reportView: UIView!
+    
+    @IBOutlet var reportedTxt: UITextView!
+    
+    @IBAction func confirmReportBtnAction(_ sender: Any) {
+        
+         self.reportView.isHidden = true
+        self.homeCollView.isUserInteractionEnabled = true
+        
+        let ref = Database.database().reference()
+        let keyToPost = ref.childByAutoId().key
+        
+        let feed = [
+            
+            "postID" : self.postAllUserData[selectedIndex].postId,
+            "reportby_userId"      : Auth.auth().currentUser?.uid,
+            "reportby_userName"     : self.userNameLbl.text!,
+            "postby_userId"         : self.postAllUserData[selectedIndex].userId,
+            "postby_userName"       : self.postAllUserData[selectedIndex].userName,
+            "reportDescription"     : self.reportedTxt.text!,
+            "key"                   : keyToPost
+            
+            ] as [String :Any]
+        
+        
+        
+        ref.child("Admin").child("Reported Post").child(self.postAllUserData[selectedIndex].postId).child(keyToPost).updateChildValues(feed)
+        
+        
+    }
+    @IBAction func cancelBtnAction(_ sender: Any) {
+        
+         self.reportView.isHidden = true
+        self.homeCollView.isUserInteractionEnabled = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserDefaults.standard.value(forKey: "loginType") as! String == "emailpassword"
-        {
-            if UserDefaults.standard.object(forKey: "userName") == nil
-            {
-                self.title = "unknown"
-            }
-            else
-            {
-                self.title = UserDefaults.standard.value(forKey: "userName") as? String
-            }
-           
-        }
-       else
-        {
-            self.title = Auth.auth().currentUser?.displayName
-        }
-    
+
         self.profileImg.layer.cornerRadius = self.profileImg.frame.size.width / 2
         self.profileImg.clipsToBounds = true
         
-       postTblView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(self.view.frame.size.width), height: CGFloat(self.view.frame.size.height))
+        postView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(self.view.frame.size.width), height: CGFloat(self.view.frame.size.height))
         
-        self.view?.addSubview(postTblView)
+        self.view?.addSubview(postView)
         self.view.isHidden = false;
         
-        
+        self.reportView.layer.cornerRadius = 5.0
+        self.reportView.clipsToBounds = true
     }
     // cross btn action: - Mark
-    @IBAction func btnAction(_ sender: Any) {
+    @IBAction func crossBtnAction(_ sender: Any) {
         
         self.navigationController?.isNavigationBarHidden = false
         self.view.isHidden = false
-        postTblView.removeFromSuperview()
+        postView.removeFromSuperview()
         
         sliderVC = self.storyboard?.instantiateViewController(withIdentifier: "SliderController") as? SliderController
         sliderVC.view.frame = CGRect(x: CGFloat(-250), y: CGFloat(64), width: CGFloat(self.view.frame.size.width), height: CGFloat(self.view.frame.size.height))
@@ -106,8 +131,7 @@ class ProfileController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         
-        print(SingleToneClass.shared.selectedBtn)
-        
+    
         if SingleToneClass.shared.selectedBtn  == " "
         {
             self.navigationController?.isNavigationBarHidden = true
@@ -118,7 +142,7 @@ class ProfileController: UIViewController {
             self.navigationController?.isNavigationBarHidden = false
         }
         
-       // MBProgressHUD.showAdded(to: self.view, animated: true)
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         self.postData.removeAll()
         self.profilePicArray.removeAllObjects()
         postAllUserData.removeAll()
@@ -142,64 +166,38 @@ class ProfileController: UIViewController {
         let uid = Auth.auth().currentUser?.uid
         let ref = Database.database().reference()
         //.queryOrderedByKey()
-        ref.child("userProfileData").queryOrderedByKey().observeSingleEvent(of: .value, with: {
+        ref.child("Users").child(uid!).observeSingleEvent(of: .value, with: {
             
             (snapshot) in
             
-            print(snapshot)
-          /*
-            if snapshot.childrenCount == 0
-            {
-                return
-            }
+           // print(snapshot)
+            
+         
             let users = snapshot.value as! [String : AnyObject]
+           self.profileImgUrl = (users["profilePic"] as! String)
+            self.followersLbl.text = String(users["followersCount"] as! Int)
+             self.followingLbl.text = String(users["followingCount"] as! Int)
             
-            print(users)
-            let userToShow = UserProfileData()
-            userToShow.getUserName = users["userName"] as? String
-             userToShow.getImagePath = users["profilePic"] as? String
-            self.userProfileData.append(userToShow)
-            // self.userNameLbl.text = userToShow.getUserName
+            self.profileImg.sd_setImage(with: URL(string: (users["profilePic"] as! String)),placeholderImage: UIImage(named: "User"))
             
-            
-            
-            
-          //  self.userProfileData.append(<#T##newElement: UserProfileData##UserProfileData#>)
-            
-            //self.postData.removeAll()
-            
-            */
-            let users = snapshot.value as! [String : AnyObject]
-            
-            
-            for (_,value) in users
-            {
+            self.userNameLbl.text = (users["userName"] as! String)
             
 
-            if let uid = value["userId"] as? String
-            {
-                if uid == Auth.auth().currentUser?.uid
-                {
-
-                    let userToShow = UserProfileData()
-                    userToShow.getUserId = value["userId"] as? String
-                    userToShow.getImagePath = value["pathToImage"] as? String
-                    self.userProfileData.append(userToShow)
-                    
-                    self.profileImg.sd_setImage(with: URL(string: (value["pathToImage"] as? String)!))
-                   // print(value["userName"]as? String)
-                }
-            }
-            
-            MBProgressHUD.hide(for: (self.view)!, animated: true)
-        }
-        })
+    })
+        
+}
+    
+    @IBAction func editButtonAction(_ sender: Any) {
         
         
+         SingleToneClass.shared.selectedBtn = " Edit Profile" 
+        let editProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileController") as! EditProfileController
         
+        editProfileVC.userName = self.userNameLbl.text!
+        editProfileVC.imgUrl = self.profileImgUrl
+        self.navigationController?.pushViewController(editProfileVC, animated: false)
         
     }
-    
     
     // Data fetch for collectionview : - Personal Post Data Fetch
     func fetchUserProfilePosts()
@@ -209,7 +207,7 @@ class ProfileController: UIViewController {
             
             (snapshot) in
             
-            //print(snapshot)
+           // print(snapshot)
             
             if snapshot.childrenCount == 0
             {
@@ -226,7 +224,7 @@ class ProfileController: UIViewController {
                     if uid == Auth.auth().currentUser?.uid
                     {
                         
-                       // print(value ["pathToVideo"] as? String)
+                  
                         let userToShow = PostData()
                         userToShow.postId = value["postID"] as? String
                         userToShow.userId = value["userId"] as? String
@@ -234,15 +232,25 @@ class ProfileController: UIViewController {
                         userToShow.imgUrl = value["pathToImage"] as? String
                         userToShow.userName = value ["userName"] as? String
                         userToShow.videoUrl = value ["pathToVideo"] as? String
+                        userToShow.thumbleImage = value["thumbleImage"] as? String
+                        userToShow.imageHeight = value ["imageHeight"] as? Int
+                        userToShow.imageWidth = value["imageWidth"] as? Int
                         userToShow.likes = value ["likes"] as? Int
                          userToShow.comments = value ["comments"] as? Int
+                        
+                        
+                        if let people = value["peoplewhoLike"] as? [String: AnyObject]
+                        {
+                            for (_,person) in people
+                            {
+                                userToShow.peopleWholike.append(person as! String)
+                            }
+                        }
+                        
                         self.postData.append(userToShow)
                     }
                 }
-                
-                
-                print(users)
-                
+             
             }
             
             self.profileCollView.reloadData()
@@ -283,7 +291,10 @@ class ProfileController: UIViewController {
                             userToShow.videoUrl = value ["pathToVideo"] as? String
                             userToShow.likes = value ["likes"] as! Int
                             userToShow.comments = value ["comments"] as! Int
-                             // userToShow.profileImg = value["profileImage"] as? String
+                            userToShow.imageHeight = value ["imageHeight"] as! Int
+                            userToShow.imageWidth = value ["imageWidth"] as! Int
+                            userToShow.thumbleImage = value["thumbleImage"] as! String
+                            
                             
                             if let people = value["peoplewhoLike"] as? [String: AnyObject]
                             {
@@ -308,18 +319,18 @@ class ProfileController: UIViewController {
     func fetchAllUserProfileData(userId : String)
   {
     
-    print(userId)
+ 
   //  let ref = Database.database().reference().child("userProfileData").queryOrdered(byChild: "userId").queryEqual(toValue : postId)
-    let ref = Database.database().reference().child("userProfileData").child(userId)
-
+    let ref = Database.database().reference().child("Users").child(userId)
+    let uData = UserData()
     ref.observe(.value, with:{ (snapshot) in
         
-        print(snapshot)
+       // print(snapshot)
         
         if snapshot.childrenCount == 0
         {
             //self.profilePicArray.add(" ")
-            let uData = UserData()
+           
             uData.userName = " "
             uData.userProfileImg = " "
             uData.userId = userId
@@ -333,24 +344,23 @@ class ProfileController: UIViewController {
             let users = snapshot.value as! [String : AnyObject]
 
             
-            let profileImg = users["pathToImage"] as? String
+          //  let profileImg = users["profilePic"] as? String
             
-            let uData = UserData()
+//            let uData = UserData()
             
             uData.userName = users["userName"] as? String
-            uData.userProfileImg = users["pathToImage"] as? String
+            uData.userProfileImg = users["profilePic"] as? String
             uData.userId = users["userId"] as? String
             
         self.userData.append(uData)
             
-            print(profileImg!)
-            
+         
         }
-       
-      //  print(self.profilePicArray)
+     
         DispatchQueue.main.async { [unowned self] in
-            self.homeScreenTblview.reloadData()
+            self.homeCollView.reloadData()
         }
+        MBProgressHUD.hide(for: self.view, animated: true)
         
     })
     // ref.removeAllObservers()
@@ -371,42 +381,37 @@ class ProfileController: UIViewController {
         let item1 = UIBarButtonItem(customView: button1)
         self.navigationItem.leftBarButtonItem = item1
         
-        if UserDefaults.standard.value(forKey: "loginType") as! String == "emailpassword"
-        {
-            if UserDefaults.standard.object(forKey: "userName") == nil
-            {
-                self.title = "unknown"
-            }
-            else
-            {
-                self.title = UserDefaults.standard.value(forKey: "userName") as? String
-            }
-            
-        }
-        else
-        {
-            self.title = Auth.auth().currentUser?.displayName
-        }
+//        if UserDefaults.standard.value(forKey: "loginType") as! String == "emailpassword"
+//        {
+//            if UserDefaults.standard.object(forKey: "userName") == nil
+//            {
+//                self.title = "unknown"
+//            }
+//            else
+//            {
+//                self.title = UserDefaults.standard.value(forKey: "userName") as? String
+//            }
+//
+//        }
+//        else
+//        {
+//            self.title = Auth.auth().currentUser?.displayName
+//        }
         
     }
     
     func setAddPostNav()
     {
-        let image1 = UIImage(named: "Back Icon")
-        let buttonFrame1 = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(20), height: CGFloat(20))
-        let button1 = UIButton(frame: buttonFrame1)
-        button1.addTarget(self, action: #selector(self.addPostButtonAction), for: .touchUpInside)
-        button1.setImage(image1, for: .normal)
-        let item1 = UIBarButtonItem(customView: button1)
-        self.navigationItem.leftBarButtonItem = item1
-    }
-    
-    @objc func addPostButtonAction()
-    {
-       SingleToneClass.shared.selectedBtn   = "Add Post"
+//        let image1 = UIImage(named: "Back Icon")
+//        let buttonFrame1 = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(20), height: CGFloat(20))
+//        let button1 = UIButton(frame: buttonFrame1)
+//        button1.addTarget(self, action: #selector(self.addPostButtonAction), for: .touchUpInside)
+//        button1.setImage(image1, for: .normal)
+//        let item1 = UIBarButtonItem(customView: button1)
+//        self.navigationItem.leftBarButtonItem = item1
         
+        backBtn()
     }
-    
     
     
     func setSearchNav()
@@ -422,11 +427,13 @@ class ProfileController: UIViewController {
         button.addTarget(self, action: #selector(menuOpen), for: .touchUpInside)
         customView.addSubview(button)
         
-        let textField = UITextField(frame: CGRect(x: 60, y: 0.0, width: 200.0, height: 40.0))
+        textField = UITextField(frame: CGRect(x: 60, y: 0.0, width: 200.0, height: 40.0))
         textField.textAlignment = NSTextAlignment.left
         textField.backgroundColor = UIColor.clear
         textField.font = UIFont(name: (textField.font?.fontName)!, size: 15)
         textField.placeholder = "search "
+        
+        
         
         customView.addSubview(textField)
         
@@ -444,7 +451,37 @@ class ProfileController: UIViewController {
         
         self.title = " "
     }
-    
+    @objc func  menuOpen()
+    {
+        
+        
+        let ref = Database.database().reference()
+        ref.child("Users").queryOrdered(byChild: "userName").queryStarting(atValue: textField.text).queryEnding(atValue: textField.text! + "\u{f8ff}").observe(.value, with: { snapshot in
+           
+            
+            print(snapshot)
+           
+            
+            
+              let users = snapshot.value as! [String : AnyObject]
+            
+            for (_,value) in users
+            {
+                
+                let userToShow = UserProfileData()
+                userToShow.getUserName = value["userName"] as? String
+                userToShow.getImagePath = value["profilePic"] as? String
+                print(value["userName"] as? String)
+                self.searchData.append(userToShow)
+            }
+            
+            
+            
+        })
+        
+        
+        
+    }
     
     @objc func menuTabButtonAction()
     {
@@ -480,6 +517,7 @@ class ProfileController: UIViewController {
     func logoutAction()
     {
         
+        SingleToneClass.shared.selectedBtn = " "
         
         let alertController = UIAlertController(title: "Alert", message: "Are sure to logout?", preferredStyle: .alert)
         
@@ -545,6 +583,18 @@ class ProfileController: UIViewController {
         }
         
     }
+    
+    
+    @IBAction func reportBtnAction(_ sender: Any) {
+        
+        
+        
+        
+    }
+    
+    
+    
+    
 }
 
 
@@ -552,81 +602,230 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
 {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return self.postData.count
+        if collectionView == profileCollView
+        {
+            return self.postData.count
+        }
+        else
+        {
+            if (postAllUserData.count == userData.count)
+            {
+                return (postAllUserData.count )
+            }
+            else
+                
+            {
+                return 0
+            }
+        }
     }
     
     // make a cell for each cell index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // get a reference to our storyboard cell
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollCell", for: indexPath as IndexPath) as! ProfileCollCell
         
-        if (self.postData[indexPath.row].imgUrl! == " ")
+      
+        
+        if collectionView == profileCollView
         {
-            cell.uploadImg.image = UIImage(named: "Profile Icon")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollCell", for: indexPath as IndexPath) as! ProfileCollCell
             
+            if (self.postData[indexPath.row].imgUrl! == " ")
+            {
+                cell.uploadImg.sd_setImage(with: URL(string: self.self.postData[indexPath.row].thumbleImage!), placeholderImage: UIImage(named: " "))
+                cell.videoIcon.isHidden = false
+                cell.profileVideoPlayBtn.isHidden = false
+                
+            }
+            else
+            {
+                
+                print(self.postData[indexPath.row].imgUrl!)
+                //cell.uploadImg.downloadImg(from: self.postData[indexPath.row].imgUrl!)
+                cell.uploadImg.sd_setImage(with: URL(string: self.self.postData[indexPath.row].imgUrl!), placeholderImage: UIImage(named: " "))
+                
+                cell.videoIcon.isHidden = true
+                cell.profileVideoPlayBtn.isHidden = true
+                
+            }
+            print(self.postData[indexPath.row].videoUrl)
+            
+            return cell
         }
+        
         else
         {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollCell", for: indexPath as IndexPath) as! HomeCollCell
             
-            print(self.postData[indexPath.row].imgUrl!)
-            //cell.uploadImg.downloadImg(from: self.postData[indexPath.row].imgUrl!)
-            cell.uploadImg.sd_setImage(with: URL(string: self.self.postData[indexPath.row].imgUrl!), placeholderImage: UIImage(named: " "))
+            cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
+            cell.userImage.clipsToBounds = true
+            cell.commentBtn.tag = indexPath.row
+            cell.favBtn.tag = indexPath.row
+            cell.commentBtn.addTarget(self, action: #selector(commentAction), for: .touchUpInside)
+            cell.postId = postAllUserData[indexPath.row].postId
+            cell.postUserName = postAllUserData[indexPath.row].userName
+            cell.postUserId = postAllUserData[indexPath.row].userId
+            cell.getUserName = self.userNameLbl.text!
+            cell.likeLbl.text = String( postAllUserData[indexPath.row].likes)
+            cell.commentlbl.text = String( postAllUserData[indexPath.row].comments)
+            
+            if postAllUserData[indexPath.row].userId == userData[indexPath.row].userId
+            {
+                cell.userImage.sd_setImage(with: URL(string: userData[indexPath.row].userProfileImg as! String),placeholderImage: UIImage(named: " "))
+            }
+            
+            if self.postAllUserData[indexPath.row].imgUrl == " "
+            {
+                cell.playBtn.isHidden = false
+                cell.postImg.sd_setImage(with: URL(string: self.postAllUserData[indexPath.row].thumbleImage!), placeholderImage: UIImage(named: " "))
+            }
+            else
+            {
+                cell.playBtn.isHidden = true
+                
+                // cell.postImg.downloadImg(from: self.postAllUserData[indexPath.row].imgUrl!)
+                cell.postImg.sd_setImage(with: URL(string: self.postAllUserData[indexPath.row].imgUrl!), placeholderImage: UIImage(named: " "))
+                
+                
+                if(( (postAllUserData[indexPath.row].imageWidth) > 300) && (postAllUserData[indexPath.row].imageHeight) > 400)
+                {
+                    cell.postImg.contentMode = .scaleToFill
+                    cell.backgroundColor = UIColor.white
+                }
+                else
+                    
+                {
+                    cell.postImg.contentMode = .scaleAspectFit
+                    cell.backgroundColor = UIColor.black
+                }
+                
+                
+                
+            }
+            
+            cell.userName.text = userData[indexPath.row].userName!
+             cell.userName.layer.masksToBounds = true
+             cell.userName.layer.shadowColor = UIColor.red.cgColor
+             cell.userName.layer.shadowOpacity = 0.5
+            
+            if (self.postAllUserData[indexPath.row].peopleWholike.count == 0)
+            {
+                cell.favBtn.isHidden = false
+                cell.disLikeBtn.isHidden = true
+            }
+                
+            else
+            {
+                for person in self.postAllUserData[indexPath.row].peopleWholike
+                {
+                    
+                    if person == Auth.auth().currentUser?.uid
+                    {
+                        cell.favBtn.isHidden = true
+                        cell.disLikeBtn.isHidden = false
+                        break
+                    }
+                    else
+                    {
+                        cell.favBtn.isHidden = false
+                        cell.disLikeBtn.isHidden = true
+                        
+                    }
+                }
+            }
+            
+           
+            
+            return cell
         }
-      print(self.postData[indexPath.row].videoUrl)  
-        
-        return cell
+       
     }
 
     // MARK: - UICollectionViewDelegate protocol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
-        print("You selected cell #\(indexPath.item)!")
+      
+        SingleToneClass.shared.selectedBtn = "Photo"
         
-        
-        for person in self.postAllUserData[indexPath.row].peopleWholike
+        if collectionView == profileCollView
         {
-            print(person)
-            print(Auth.auth().currentUser?.uid)
-            if person == Auth.auth().currentUser?.uid
+            if self.postData[indexPath.row].videoUrl == " "
             {
-               ispostLiked = true
-                break
+                
+                if self.postData[indexPath.row].peopleWholike.count == 0
+                {
+                    ispostLiked = false
+                }
+                else
+                    
+                {
+                    
+                    for person in self.postData[indexPath.row].peopleWholike
+                    {
+                        
+                        if person == Auth.auth().currentUser?.uid
+                        {
+                            ispostLiked = true
+                            break
+                        }
+                        else
+                        {
+                            ispostLiked = false
+                            
+                        }
+                    }
+                }
+                
+                
+                let regVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoController") as! PhotoController
+                
+                
+                
+                regVC.userName = self.userNameLbl.text!
+                regVC.imgurl = postData[indexPath.row].imgUrl
+                regVC.isPostLikeed = ispostLiked
+                regVC.postId = postData[indexPath.row].postId
+                regVC.profileImgUrl = profileImgUrl
+                regVC.likeCount = String(postData[indexPath.row].likes)
+                regVC.commentCount = String(postData[indexPath.row].comments)
+                regVC.imgHeight = postData[indexPath.row].imageHeight
+                regVC.imgWidth = postData[indexPath.row].imageWidth
+                
+                self.navigationController?.pushViewController(regVC, animated: false)
             }
             else
             {
+                self.videoURL = self.postData[indexPath.row].videoUrl
                 
-                
+                playExternalVideo()
             }
+            
         }
         
-        SingleToneClass.shared.selectedBtn = "Photo"
+ else
         
-        if self.postData[indexPath.row].videoUrl == " "
         {
+            if self.postAllUserData[indexPath.row].videoUrl == " "
+            {
+//                let regVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoController") as! PhotoController
+//
+//
+//                regVC.userName = postAllUserData[indexPath.row].userName
+//                regVC.imgurl = postAllUserData[indexPath.row].imgUrl
+//                regVC.postId = postAllUserData[indexPath.row].postId
+//
+//                self.tabBarController?.navigationController?.pushViewController(regVC, animated: false)
+            }
+            else
+            {
+                self.videoURL = self.postAllUserData[indexPath.row].videoUrl
+                
+                playExternalVideo()
+            }
             
-            
-            
-            let regVC = self.storyboard?.instantiateViewController(withIdentifier: "PhotoController") as! PhotoController
-            
-            
-            regVC.userName = postData[indexPath.row].userName
-            regVC.imgurl = postData[indexPath.row].imgUrl
-            regVC.isPostLikeed = ispostLiked
-            regVC.postId = postData[indexPath.row].postId
-            regVC.profileImgUrl = profileImgUrl
-            regVC.likeCount = String(postData[indexPath.row].likes)
-            regVC.commentCount = String(postData[indexPath.row].comments)
-            self.navigationController?.pushViewController(regVC, animated: false)
         }
-        else
-        {
-            self.videoURL = self.postData[indexPath.row].videoUrl
-            
-            playExternalVideo()
-        }
-        
         
         
         
@@ -636,7 +835,16 @@ extension ProfileController : UICollectionViewDelegate,UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
       //  return CGSize(width: ((self.view.frame.width / 3)-20), height: 100)
         
-        return CGSize(width: ((self.view.frame.width / 3)), height: ((self.view.frame.width / 3)))
+        if collectionView == profileCollView
+        {
+             return CGSize(width: ((self.view.frame.width / 3)), height: ((self.view.frame.width / 3)))
+        }
+        else
+        
+        {
+             return CGSize(width: ((self.view.frame.width)), height: ((self.view.frame.height)))
+        }
+       
         
     }
 
@@ -650,22 +858,7 @@ extension ProfileController : UIImagePickerControllerDelegate,UINavigationContro
             
             if let image = info[UIImagePickerControllerEditedImage ] as? UIImage
             {
-//                print(info)
-//                print(info[si])
-                
-                let heightInPoints = image.size.height
-                let heightInPixels = heightInPoints * image.scale
-                
-                let widthInPoints = image.size.width
-                let widthInPixels = widthInPoints * image.scale
-                
-                print(heightInPoints)
-                print(widthInPoints)
-                
-                print(heightInPixels)
-                print(widthInPixels)
-               
-                
+
                 self.profileImg.image = image
             }
             myImageUploadRequest()
@@ -679,8 +872,7 @@ extension ProfileController : UIImagePickerControllerDelegate,UINavigationContro
     {
         
         let imageData = UIImageJPEGRepresentation(self.profileImg.image!, 0.9)
-        print(imageData!)
-        
+
         if(imageData==nil)  {
             
             
@@ -704,15 +896,14 @@ extension ProfileController : UIImagePickerControllerDelegate,UINavigationContro
             
             guard let metadata = metadata else{
                 
-                print(error!)
-                
+//                print(error!)
+//
                 return
                 
             }
             let downloadURL = metadata.downloadURL()
             self.videonewURL = downloadURL! as NSURL
             let uid = Auth.auth().currentUser!.uid
-            let ref = Database.database().reference()
            
             
             if (self.videonewURL == nil)
@@ -721,39 +912,25 @@ extension ProfileController : UIImagePickerControllerDelegate,UINavigationContro
             }
             else
             {
-                let key  = ref.child("userProfileData").childByAutoId().key
-                let refnew = Database.database().reference().child("userProfileData").queryOrdered(byChild: uid)
+               // let key  = ref.child("userProfileData").childByAutoId().key
+                let refnew = Database.database().reference().child("Users").child(uid)
                 
                 refnew.observe(.value, with:{ (snapshot) in
                     
                     let feed = [
-                        "userId": uid,
-                        "pathToImage" : self.videonewURL?.absoluteString as Any,
-                        "postID" : key,
-                        "userName"      : Auth.auth().currentUser?.displayName ?? " "
-                        ] as [String :Any]
-                    
-                    
-                    if snapshot.childrenCount == 0
-                    {
-                        
-                        let postFeed = ["\(key)" : feed]
-                        ref.child("userProfileData").setValue(postFeed)
-                    }
-                        
-                    else
-                    {
-                        let key  = ref.child(uid).key
-                        let postFeed = ["\(key)" : feed]
-                        ref.child("userProfileData").updateChildValues(postFeed)
-                    }
+
+                        "profilePic" : self.videonewURL?.absoluteString as Any,
+
+                        ]
+                
+                    refnew.updateChildValues(feed)
                     
                 })
             }
             
           
     })
-}
+ }
 }
 extension ProfileController : sliderIndexDelegate
 
@@ -762,33 +939,28 @@ extension ProfileController : sliderIndexDelegate
         
     }
     
-    @objc func  menuOpen()
-    {
-        //self.navigationController?.popViewController(animated: true)
-        
-        print("fghfgh")
-    }
+    
     
    
     func getSliderIndex(index: NSInteger) {
         
         SingleToneClass.shared.selectedBtn = "Menu Btn Clicked"
         
-//        if index == 0
-//        {
-//            let addContractVC = self.storyboard?.instantiateViewController(withIdentifier: "AddContactController") as! AddContactController
-//
-//            self.navigationController?.pushViewController(addContractVC, animated: true)
-//
-//
-//        }
-        
-            if (index == 1)
+        if index == 0
         {
-            setProfileNav()
-           
+            let addContractVC = self.storyboard?.instantiateViewController(withIdentifier: "AddContactController") as! AddContactController
+
+            self.navigationController?.pushViewController(addContractVC, animated: true)
             slideViewHideAnimation()
+
         }
+        
+//        else if (index == 1)
+//        {
+//            setProfileNav()
+//
+//            slideViewHideAnimation()
+//        }
         else if (index == 4)
         {
             logoutAction()
@@ -839,7 +1011,7 @@ extension ProfileController : tabbarIndexDelegate
             
             SingleToneClass.shared.selectedBtn   = "Add Post "
             let homeVC = self.storyboard?.instantiateViewController(withIdentifier: "AddPostController") as! AddPostController
-            
+            homeVC.userName = self.userNameLbl.text!
             self.navigationController?.pushViewController(homeVC, animated: false)
             
             
@@ -856,11 +1028,11 @@ extension ProfileController : tabbarIndexDelegate
             SingleToneClass.shared.selectedBtn   = " "
             self.navigationController?.isNavigationBarHidden = true
             tabButtonVC.btnView.isHidden = true
-            postTblView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(self.view.frame.size.width), height: CGFloat(self.view.frame.size.height))
+            postView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(self.view.frame.size.width), height: CGFloat(self.view.frame.size.height))
             
             
             
-            self.view?.addSubview(postTblView)
+            self.view?.addSubview(postView)
             
         }
         else
@@ -879,9 +1051,18 @@ extension ProfileController : UITableViewDataSource,UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        print(postAllUserData.count)
-        print(userData.count )
-        return (postAllUserData.count )
+//        print(postAllUserData.count)
+//        print(userData.count )
+        if (postAllUserData.count == userData.count)
+        {
+            return (postAllUserData.count )
+        }
+        else
+        
+        {
+            return 0
+        }
+        
     }
     
    
@@ -892,45 +1073,25 @@ extension ProfileController : UITableViewDataSource,UITableViewDelegate
         
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
-
         cell.commnentBtn.tag = indexPath.row
         cell.favBtn.tag = indexPath.row
         cell.commnentBtn.addTarget(self, action: #selector(commentAction), for: .touchUpInside)
-        
         cell.postId = postAllUserData[indexPath.row].postId
+        cell.postUserName = postAllUserData[indexPath.row].userName
+        cell.postUserId = postAllUserData[indexPath.row].userId
+        cell.getUserName = self.userNameLbl.text!
         cell.likeLbl.text = String( postAllUserData[indexPath.row].likes)
-         cell.commentlbl.text = String( postAllUserData[indexPath.row].comments)
+        cell.commentlbl.text = String( postAllUserData[indexPath.row].comments)
         
         if postAllUserData[indexPath.row].userId == userData[indexPath.row].userId
         {
              cell.userImage.sd_setImage(with: URL(string: userData[indexPath.row].userProfileImg as! String),placeholderImage: UIImage(named: " "))
         }
         
-        
         if self.postAllUserData[indexPath.row].imgUrl == " "
         {
-           
-            cell.playBtn.isHidden = false
-            let asset: AVAsset = AVAsset(url: URL(string: self.postAllUserData[indexPath.row].videoUrl)!)
-            let imageGenerator = AVAssetImageGenerator(asset: asset)
-
-            do {
-                let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60) , actualTime: nil)
-                
-                print(thumbnailImage)
-                DispatchQueue.main.async(execute: {
-                    // assign your image to UIImageView
-                    
-                   cell.postImg.image = UIImage(cgImage: thumbnailImage)
-
-
-                })
-
-            } catch let error {
-                print(error)
-                
-            }
-            
+          cell.playBtn.isHidden = false
+            cell.postImg.sd_setImage(with: URL(string: self.postAllUserData[indexPath.row].thumbleImage!), placeholderImage: UIImage(named: " "))
         }
         else
         {
@@ -938,34 +1099,55 @@ extension ProfileController : UITableViewDataSource,UITableViewDelegate
             
            // cell.postImg.downloadImg(from: self.postAllUserData[indexPath.row].imgUrl!)
             cell.postImg.sd_setImage(with: URL(string: self.postAllUserData[indexPath.row].imgUrl!), placeholderImage: UIImage(named: " "))
-        }
-        
-        if postAllUserData[indexPath.row].userName == " "
-        {
-            cell.userName.text = " "
-        }
-        else
-        {
-            cell.userName.text = postAllUserData [indexPath.row].userName!
-        }
-        
-        for person in self.postAllUserData[indexPath.row].peopleWholike
-        {
-            //print(person)
-            //print(Auth.auth().currentUser?.uid)
-            if person == Auth.auth().currentUser?.uid
+            
+            
+            if(( (postAllUserData[indexPath.row].imageWidth) > 300) && (postAllUserData[indexPath.row].imageHeight) > 400)
             {
-                cell.favBtn.isHidden = true
-                cell.disLikeBtn.isHidden = false
-                break
+                cell.postImg.contentMode = .scaleToFill
+                cell.backgroundColor = UIColor.white
             }
             else
+            
             {
-                cell.favBtn.isHidden = false
-                cell.disLikeBtn.isHidden = true
-                
+                cell.postImg.contentMode = .scaleAspectFit
+                  cell.backgroundColor = UIColor.black
+            }
+            
+            
+            
+        }
+        
+       cell.userName.text = userData[indexPath.row].userName!
+        
+        
+        if (self.postAllUserData[indexPath.row].peopleWholike.count == 0)
+        {
+            cell.favBtn.isHidden = false
+            cell.disLikeBtn.isHidden = true
+        }
+        
+        else
+        {
+            for person in self.postAllUserData[indexPath.row].peopleWholike
+            {
+               
+                if person == Auth.auth().currentUser?.uid
+                {
+                    cell.favBtn.isHidden = true
+                    cell.disLikeBtn.isHidden = false
+                    break
+                }
+                else
+                {
+                    cell.favBtn.isHidden = false
+                    cell.disLikeBtn.isHidden = true
+                    
+                }
             }
         }
+        
+         cell.reportView.tag = indexPath.row
+         cell.reportView.addTarget(self, action: #selector(reportAction), for: .touchUpInside)
         
         return cell
  
@@ -993,6 +1175,16 @@ extension ProfileController : UITableViewDataSource,UITableViewDelegate
         }
         
         
+        
+    }
+    
+    @objc func reportAction(sender: UIButton){
+        
+        print("romio")
+        
+        self.reportView.isHidden = false
+        
+        self.homeCollView.isUserInteractionEnabled = false
         
     }
     

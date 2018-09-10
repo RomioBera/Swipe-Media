@@ -1,4 +1,4 @@
-//
+ //
 //  CommentController.swift
 //  Swipe Media
 //
@@ -11,7 +11,8 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 import SDWebImage
-
+import MBProgressHUD
+ 
 class CommentController: UIViewController {
 
     
@@ -52,6 +53,9 @@ class CommentController: UIViewController {
       userProfileData.removeAll()
         userData.removeAll()
         fetchCommentData()
+        
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
     }
     @objc func backButtonAction()
     {
@@ -64,13 +68,17 @@ class CommentController: UIViewController {
     func fetchCommentData()
     {
         let ref = Database.database().reference()
-        ref.child("newposts").child(self.postId).child("peoplewhoComment").queryOrderedByKey().observeSingleEvent(of: .value, with: {
+       
+        self.allCommentData.removeAll()
+        ref.child("newposts").child(self.postId).child("peoplewhoComment").queryLimited(toFirst: 10).queryOrderedByKey().observeSingleEvent(of: .value, with: {
             
             (snapshot) in
             
             print(snapshot)
             if snapshot.childrenCount == 0
             {
+                
+                MBProgressHUD.hide(for: self.view, animated: true)
                 return
             }
             let users = snapshot.value as! [String : AnyObject]
@@ -87,30 +95,33 @@ class CommentController: UIViewController {
                    // print(value["key"] as? String)
 
                     self.allCommentData.append(userToShow)
-                    self.fetchAllUserProfileData(userId:(value["userId"] as? String)! )
+                     self.fetchAllNewUserProfileData(userId:(value["userId"] as? String)! )
                     
                     
                 }
             }
             
             //self.commentTblView.reloadData()
+            
         })
         
     }
     
-    func fetchAllUserProfileData(userId:String)
+    func fetchAllNewUserProfileData(userId:String)
     {
         
-        let ref = Database.database().reference().child("userProfileData").child(userId)
+       // let uid = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("Users").child(userId)
+         let uData = UserData()
         
         ref.observe(.value, with:{ (snapshot) in
             
-            print(snapshot)
+            print("snapshot : ", snapshot)
             
             if snapshot.childrenCount == 0
             {
                 //self.profilePicArray.add(" ")
-                let uData = UserData()
+              
                 uData.userName = " "
                 uData.userProfileImg = " "
                 uData.userId = userId
@@ -122,19 +133,15 @@ class CommentController: UIViewController {
                 
                 
                 let users = snapshot.value as! [String : AnyObject]
-                
-                
-                let profileImg = users["pathToImage"] as? String
-                
-                let uData = UserData()
-                
+               // let profileImg = users["profilePic"] as? String
+                //let uData = UserData()
                 uData.userName = users["userName"] as? String
-                uData.userProfileImg = users["pathToImage"] as? String
+                uData.userProfileImg = users["profilePic"] as? String
                 uData.userId = users["userId"] as? String
                 
                 self.userData.append(uData)
                 
-                print(profileImg!)
+               
                 
             }
             
@@ -149,13 +156,15 @@ class CommentController: UIViewController {
                 self.commentTblView.reloadData()
             }
             
+            MBProgressHUD.hide(for: self.view, animated: true)
         })
         
         
         
         
     }
-   
+    
+    
     @IBAction func postBtnAction(_ sender: Any) {
         
         let ref = Database.database().reference()
@@ -193,13 +202,17 @@ class CommentController: UIViewController {
                                     ref.child("newposts").child(self.postId).updateChildValues(update)
                                  
                                     // ref.child("newposts").child(key).setValue(feed)
-                                    // self.feedTblView.reloadData()
+                                     //self.feedTblView.reloadData()
                                 }
                             }
                         })
                     }
                 }
             )}
+            
+//            self.commentTblView.reloadData()
+            
+            self.fetchCommentData()
         })
         
     }
@@ -212,7 +225,15 @@ extension CommentController : UITableViewDataSource,UITableViewDelegate
         
         print(allCommentData.count)
         print(userData.count)
-        return allCommentData.count
+        if (allCommentData.count == userData.count)
+        {
+            return allCommentData.count
+        }
+        else
+        {
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -221,11 +242,23 @@ extension CommentController : UITableViewDataSource,UITableViewDelegate
         self.commentTblView.separatorColor = UIColor.clear
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         
-     cell.userImg.sd_setImage(with: URL(string: userData[indexPath.row].userProfileImg ),placeholderImage: UIImage(named: " "))
+         cell.userImg.layer.cornerRadius =  cell.userImg.frame.size.width / 2
+        cell.userImg.clipsToBounds = true
+        
+        if (userData[indexPath.row].userProfileImg) as String == " "
+        {
+            
+        }
+        else
+        {
+             cell.userImg.sd_setImage(with: URL(string: userData[indexPath.row].userProfileImg ),placeholderImage: UIImage(named: " "))
+        }
+    
        cell.commentTxt.text = allCommentData[indexPath.row].postDes
 
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -238,7 +271,7 @@ extension CommentController : UITableViewDataSource,UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-       return 60
+       return 80
 
     }
     

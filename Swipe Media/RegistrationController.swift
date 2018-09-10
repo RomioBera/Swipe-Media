@@ -99,23 +99,8 @@ class RegistrationController: UIViewController {
                     return
                 }
                 
-//                let uid = Auth.auth().currentUser!.uid
-//                let ref = Database.database().reference()
-//                let key  =  ref.childByAutoId().key
-//                let feed = [
-//                    "userId": uid,
-//                    "profilePic" : " ",
-//                    "userName"      : self.userNameTxt.text ?? " ",
-//                    "key"           : key
-//                    ] as [String :Any]
-//
-//
-//                ref.child("Users").child(uid).setValue(feed)
-                
-              
-                UserDefaults.standard.set("emailpassword", forKey: "loginType")
-                 UserDefaults.standard.set(self.userNameTxt.text ?? " ", forKey: "userName")
-                
+
+                self.createUserDatabase()
                 
                 let alertController = UIAlertController(title: "Congratulation", message: "You sucessfully register for this app..", preferredStyle: .alert)
                 
@@ -178,6 +163,27 @@ class RegistrationController: UIViewController {
         ref.child("Normal User Data ").childByAutoId().setValue(userdata)
         
     }
+    func createUserDatabase()
+    {
+        
+        let uid = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference()
+        let feed = [
+            "userId": uid!,
+            "profilePic" : " ",
+            "userName"      : self.userNameTxt.text!,
+            "loginType"     : "Other",
+            "followersCount"     : 0,
+            "followingCount"     : 0,
+            "key"            : " "
+            ] as [String :Any]
+        
+        ref.child("Users").child(uid!).updateChildValues(feed)
+        
+        
+    }
+    
+    
     @IBAction func loginBtnAction(_ sender: Any) {
         
         self.navigationController?.popViewController(animated: true)

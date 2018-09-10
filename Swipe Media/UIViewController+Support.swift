@@ -28,6 +28,26 @@ extension UIViewController {
     
     }
     
+    
+    func backBtn()
+    {
+        let image1 = UIImage(named: "Back Icon")
+        let buttonFrame1 = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(20), height: CGFloat(20))
+        let button1 = UIButton(frame: buttonFrame1)
+        button1.addTarget(self, action: #selector(self.addPostButtonAction), for: .touchUpInside)
+        button1.setImage(image1, for: .normal)
+        let item1 = UIBarButtonItem(customView: button1)
+        self.navigationItem.leftBarButtonItem = item1
+    }
+    @objc func addPostButtonAction()
+    {
+        
+        self.navigationController?.popViewController(animated: true)
+        
+    }
+    
+    
+    
     //MARK: for aler message
     func showAlertMessage(alertTitle: String, alertMsg : String)
     {

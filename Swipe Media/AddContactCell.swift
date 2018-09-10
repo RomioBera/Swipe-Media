@@ -14,6 +14,8 @@ class AddContactCell: UITableViewCell {
     
     @IBOutlet var userName: UITextView!
     @IBOutlet var profilePic: UIImageView!
+    @IBOutlet var unfollowBtn: UIButton!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -23,6 +23,7 @@ class PhotoController: UIViewController {
     @IBOutlet var likeLbl: UILabel!
     @IBOutlet var commentLbl: UILabel!
     
+    @IBOutlet var deleteView: UIView!
     var userName = ""
     var imgurl = ""
     var postId = " "
@@ -30,30 +31,98 @@ class PhotoController: UIViewController {
     var isPostLikeed = false
     var likeCount = " "
     var commentCount = " "
+    var imgHeight = 1
+    var imgWidth = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        let image1 = UIImage(named: "Back Icon")
-        let buttonFrame1 = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(20), height: CGFloat(20))
-        let button1 = UIButton(frame: buttonFrame1)
-        button1.addTarget(self, action: #selector(self.addPostButtonAction), for: .touchUpInside)
-        button1.setImage(image1, for: .normal)
-        let item1 = UIBarButtonItem(customView: button1)
-        self.navigationItem.leftBarButtonItem = item1
+       
         
+        print(imgWidth)
+        print(imgHeight)
+        backBtn()
         profileName.text = userName
-        //profileImg.downloadImg(from: profileImgUrl)
-        photoImg.downloadImg(from: imgurl)
+         likeLbl.text = likeCount
+        commentLbl.text = commentCount
+        
+        
+        if(( imgWidth > 300) && (imgHeight > 400))
+        {
+            photoImg.contentMode = .scaleToFill
+            photoImg.backgroundColor = UIColor.white
+        }
+        else
+            
+        {
+            photoImg.contentMode = .scaleAspectFit
+            photoImg.backgroundColor = UIColor.black
+        }
+        
         
         photoImg.sd_setImage(with: URL(string: imgurl), placeholderImage: UIImage(named: " "))
         profileImg.sd_setImage(with: URL(string: profileImgUrl), placeholderImage: UIImage(named: " "))
+        profileImg.layer.cornerRadius = profileImg.frame.size.width / 2
+        profileImg.clipsToBounds = true
+        deleteView.isHidden = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        deleteView.addGestureRecognizer(tap)
+        
     }
 
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        
+        let alertController = UIAlertController(title: "Alert", message: "Are sure to delete ?", preferredStyle: .alert)
+        
+        // Create the actions
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            
+            
+            self.deleteView.isHidden = true
+            self.deletePost(postId: self.postId)
+            
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            
+        }
+        
+        // Add the actions
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        // Present the controller
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    func deletePost (postId : String)
+    {
+         let ref = Database.database().reference()
+        ref.child("newposts").observeSingleEvent(of: .value, with: {
+            
+            (snapshot) in
+            
+           ref.child("newposts").child(self.postId).removeValue()
+            
+            self.photoImg.isHidden = true
+          
+            
+        })
+        
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.photoImg.isHidden = false
+        
         
         if isPostLikeed == true
         {
@@ -68,22 +137,17 @@ class PhotoController: UIViewController {
         
     }
     
-    @objc func addPostButtonAction()
-    {
-        
-        self.navigationController?.popViewController(animated: true)
-        
-    }
+  
     
    
     
     @IBAction func chatBtnAction(_ sender: Any) {
         
         
-        showAlertMessage(alertTitle: "Alert", alertMsg: "This part is undert development..")
-//        let commentVC = self.storyboard?.instantiateViewController(withIdentifier: "CommentController") as! CommentController
-//
-//        self.navigationController?.pushViewController(commentVC, animated: false)
+       // showAlertMessage(alertTitle: "Alert", alertMsg: "This part is undert development..")
+        let commentVC = self.storyboard?.instantiateViewController(withIdentifier: "CommentController") as! CommentController
+
+        self.navigationController?.pushViewController(commentVC, animated: false)
         
     }
   
@@ -125,7 +189,7 @@ class PhotoController: UIViewController {
                                             else
                                             {
                                                 let update = ["likes" : 0]
-                                                self.likeLbl.text = "0 likes"
+                                                self.likeLbl.text = "0 "
                                                 ref.child("newposts").child(self.postId).updateChildValues(update)
                                             }
                                             
@@ -201,14 +265,19 @@ class PhotoController: UIViewController {
                                     // self.feedTblView.reloadData()
                                 }
                             }
-                        }
-                            
-                            
-                        )
+                        })
                     }
                 }
             )}
         })
         
     }
+    
+    
+    @IBAction func deleteBtnAction(_ sender: Any) {
+        
+        deleteView.isHidden = false
+    }
+    
+    
 }

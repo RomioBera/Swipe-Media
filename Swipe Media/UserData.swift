@@ -13,4 +13,8 @@ class UserData: NSObject {
     var userName : String!
     var userProfileImg : String!
     var userId : String!
+    var followingUser : [String] = [String]()
+    var followersUser : [String] = [String]()
+    var followingCount : Int!
+    var followersCount : Int!
 }

@@ -31,7 +31,13 @@ class HomeTableCell: UITableViewCell {
     @IBOutlet var commnentBtn: UIButton!
     @IBOutlet var favBtn: UIButton!
     
+    @IBOutlet var reportBtnAction: UIButton!
+    
+    @IBOutlet var reportView: UIButton!
     var postId = String()
+    var postUserName = String()
+    var postUserId = String()
+    var getUserName = String()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -179,7 +185,21 @@ class HomeTableCell: UITableViewCell {
         
     }
         
+    @IBAction func reportedBtnAction(_ sender: Any) {
         
+        self.reportView.isHidden = false
+    }
+    
+    @IBAction func reportViewBtnAction(_ sender: Any) {
+        self.reportView.isHidden = true
+        
+       
+        
+        
+        
+    }
+    
+    
     }
     
 

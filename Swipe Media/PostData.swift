@@ -17,8 +17,11 @@ class PostData: NSObject {
     var userName : String!
     var videoUrl : String!
     var profileImg : String!
+    var thumbleImage : String!
     var peopleWholike : [String] = [String]()
     var likes : Int!
     var comments : Int!
+    var imageHeight : Int!
+    var imageWidth : Int!
     
 }

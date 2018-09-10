@@ -34,6 +34,7 @@ class LoginController: UIViewController,FBSDKLoginButtonDelegate {
     var login = " "
     var dummmytextField = UITextField()
     var isClick  = false
+    var isNewUser = true
     @IBOutlet var terms_ConditionView: UIView!
     @IBOutlet var facebookView: UIView!
     @IBOutlet var gmailView: UIView!
@@ -92,18 +93,12 @@ class LoginController: UIViewController,FBSDKLoginButtonDelegate {
         }
         else
         {
-            
-           // login = "facebook"
            
             if Auth.auth().currentUser != nil
             {
                 pushController()
             }
         }
-       
-        
-        
-        
        
         
     }
@@ -254,16 +249,7 @@ class LoginController: UIViewController,FBSDKLoginButtonDelegate {
         dummmytextField.resignFirstResponder()
         
     }
-    func userData()
-    {
-        let password = "1234567"
-        let userName = "r@gmail.com"
-        
-        let _ : [String : Any] = ["password" : password ,"username" : userName]
-        
-       
-        
-    }
+   
     
     @objc func loginButtonClicked() {
         
@@ -302,7 +288,7 @@ class LoginController: UIViewController,FBSDKLoginButtonDelegate {
             }
             
             print("ssssss")
-            self.pushController()
+           // self.pushController()
     }
     
     }
@@ -333,13 +319,55 @@ class LoginController: UIViewController,FBSDKLoginButtonDelegate {
             }
             
             print("ssssss")
-            self.pushController()
-            
+           // self.pushController()
+            self.createUserDatabase()
         }
         
         
        
     }
+    
+    
+    func createUserDatabase()
+    {
+        
+        let uid = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference()
+        //.queryOrderedByKey()
+        ref.child("Users").child(uid!).observeSingleEvent(of: .value, with: {
+            
+            (snapshot) in
+            
+            if snapshot.childrenCount == 0
+            {
+                let feed = [
+                    "userId": uid!,
+                    "profilePic" : " ",
+                    "userName"      : Auth.auth().currentUser?.displayName ?? self.userNameTxt.text!,
+                    "loginType"     : self.login,
+                    "followersCount"     : 0,
+                    "followingCount"     : 0,
+                    "key"            : " "
+                    ] as [String :Any]
+                
+                ref.child("Users").child(uid!).updateChildValues(feed)
+                
+                self.isNewUser = false
+            }
+            else
+            {
+                self.isNewUser = false
+            }
+            
+            self.pushController()
+            //print(snapshot)
+        })
+        
+        
+        
+    }
+    
+    
     
     func pushController()
     {
@@ -417,8 +445,8 @@ class LoginController: UIViewController,FBSDKLoginButtonDelegate {
                 }
                 print("goof")
                 
-                self.pushController()
-                
+              //  self.pushController()
+                self.createUserDatabase()
                 
             })
             
@@ -497,8 +525,8 @@ extension LoginController : GIDSignInUIDelegate, GIDSignInDelegate
                 // ...
                 
                 print("GPLUS")
-               self.pushController()
-                
+             //  self.pushController()
+               self.createUserDatabase()
             }
             
         }

@@ -11,4 +11,7 @@ import UIKit
 class ProfileCollCell: UICollectionViewCell {
     
     @IBOutlet var uploadImg: UIImageView!
+    
+    @IBOutlet var videoIcon: UIImageView!
+    @IBOutlet var profileVideoPlayBtn: UIButton!
 }
